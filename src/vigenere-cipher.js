@@ -7,6 +7,7 @@ class VigenereCipheringMachine {
     this.decrypt = this.decrypt;
   }
 
+
   encrypt(message, key) {
     message = message.toLowerCase();
     key = key.toLowerCase();
@@ -32,7 +33,9 @@ class VigenereCipheringMachine {
   }
 
   decrypt(encryptedMessage, key) {
+    
     let message = encryptedMessage.toLowerCase();
+    key = key.toLowerCase();
     if (arguments.length < 2 ) Throw("error");
     let decoded = '';
     let letters = 'abcdefghijklmnopqrstuvwxyz';
