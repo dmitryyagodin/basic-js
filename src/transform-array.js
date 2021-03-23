@@ -7,15 +7,21 @@ module.exports = function transform( arr ) {
   let newArr = [];
 
   for (let i = 0; i < arr.length; i ++) {
-    !strings.includes(arr[i]) && newArr.push(arr[i]);  
+    !strings.includes(arr[i]) && newArr.push(arr[i]);
+
+    if (arr[i] === '--discard-prev' && arr[i - 2] === '--discard-next' || 
+    arr[i] === '--double-prev' && arr[i - 2] === '--discard-next') {
+     continue
+    }
+
     arr[i] === '--discard-next' && i++;
-    arr[i] === '--discard-prev' && newArr[newArr.length - 1] && newArr.pop();
-    arr[i] === '--double-next' && arr[i + 1] && newArr.push(arr[i + 1]);
-    arr[i] === '--double-prev' && newArr[newArr.length - 1] && newArr.push(newArr[newArr.length - 1]);
+    arr[i] === '--discard-prev' && newArr[newArr.length - 1] !== undefined && newArr.pop();
+    arr[i] === '--double-next' && arr[i + 1] !== undefined && newArr.push(arr[i + 1]);
+    arr[i] === '--double-prev' && newArr[newArr.length - 1] !== undefined && newArr.push(newArr[newArr.length - 1]);
   }
 
   return newArr
   
 };
 
-// console.log(transform([1, 2, 3, '--double-next', 4, 5]))
+// console.log(transform([1, 2, 3, '--discard-next', 1337, '--discard-prev', 4, 5]))
